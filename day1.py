@@ -5,29 +5,45 @@ file = open("day1input.txt","r")
 content=file.readlines()
 file.close()
 
-#Test list. 
-#content=["6fkjkbc", "2htpxbqvtg3one", "2threezhxzfslfxhvzdbfour15", "nrfdrzdjtlthreeonennzfbone9one", "sixtwosevenqplrqvxreight6", "bbsix2"]
+#Test list below should give a result of 281.
+#content = ["two1nine", "eightwothree", "abcone2threexyz", "xtwone3four", "4nineeightseven2", "zoneight234", "7pqrstsixteen"]
 
-#For each line, isolate the first and the last digit and add these to a counter.
-count = 0
+result = 0
 
-for element in content:
-#     element = element.replace("one","1")
-#     element = element.replace("two","2")
-#     element = element.replace("three","3")
-#     element = element.replace("four","4")
-#     element = element.replace("five","5")
-#     element = element.replace("six","6")
-#     element = element.replace("seven","7")
-#     element = element.replace("eight","8")
-#     element = element.replace("nine","9")
+#PART 1:
+# for line in content:
+#     numbers = []
+#     for char in line:
+#         if char.isdigit():
+#             numbers.append(char)
+#     charNumber = numbers[0]+numbers[-1]
+#     number = int(charNumber)
+#     result+=number
+# print(result)
+
+#PART 2: 
+stringnumbers = ["one","two","three","four","five","six","seven","eight","nine","1","2","3","4","5","6","7","8","9"]
+numbers = ["1","2","3","4","5","6","7","8","9","1","2","3","4","5","6","7","8","9"]
+for line in content:
+    numberindexfromleft = []
+    numberindexfromright = []
     
-    numbers = []
-    for char in element:
-        if char.isdigit():
-            numbers.append(char)
-    charNumber = numbers[0]+numbers[-1]
-    number = int(charNumber)
-    count+=number
+    for word in stringnumbers:
+        wordLeftIndex = line.find(word) #Becomes -1 if the line doesn't contain the word.
 
-print(count)
+        if (wordLeftIndex ==-1):
+            numberindexfromleft.append(len(stringnumbers)-1)
+        else:
+            numberindexfromleft.append(wordLeftIndex)
+
+        numberindexfromright.append(line.rfind(word))
+
+    left = numberindexfromleft.index(min(numberindexfromleft))
+    right = numberindexfromright.index(max(numberindexfromright))
+    
+    charNumber = numbers[left] + numbers[right]
+    
+    number = int(charNumber)
+    result += number
+    
+print(result)
